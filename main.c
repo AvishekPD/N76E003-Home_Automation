@@ -28,19 +28,7 @@ void InitIRSensor2(void) {
 
 void InitRelay(void) {
     Set_Relay(1);
-    //RELAY_PIN = 1;  // Initialize relay pin as output and set it high initially
-    //P12_PushPull_Mode;
-}
-
-/* void view(unsigned char count) {
-    // Your view function implementation goes here
-}
-*/
-
-void main() 
-{
-}
-
+    }
 
 void main(void)
 {

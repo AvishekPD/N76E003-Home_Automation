@@ -1,0 +1,27 @@
+.vscode/c_cpp_properties.json
+.vscode/keil_project_properties.json
+.vscode/keil-assistant.log
+.vscode/settings.json
+.vscode/Target 1_uv4.log
+Listings/Common.lst
+Listings/Delay.lst
+Listings/LCD_2_Wire.lst
+Listings/main.lst
+Listings/Mini_project.m51
+Listings/PCF8574.lst
+Listings/Relay.lst
+Listings/STARTUP.lst
+Listings/SW_I2C.lst
+Objects/Common.obj
+Objects/Delay.obj
+Objects/LCD_2_Wire.obj
+Objects/main.obj
+Objects/Mini_project
+Objects/Mini_project.bin
+Objects/Mini_project.build_log.htm
+Objects/Mini_project.hex
+Objects/Mini_project.lnp
+Objects/PCF8574.obj
+Objects/Relay.obj
+Objects/STARTUP.obj
+Objects/SW_I2C.obj

@@ -34,7 +34,7 @@ void main(void)
 {
   unsigned int temp = 0;
   unsigned int adc_count = 0;
-  unsigned int set_value = 0;
+  unsigned int set_value = 2400;
   unsigned int no_count = 0000;
   InitIRSensor1();
   InitIRSensor2();
@@ -57,14 +57,14 @@ void main(void)
     if (IR_SENSOR1_PIN) {
     while(!IR_SENSOR2_PIN);
     if(no_count != 99)
-    no_count++;
+      no_count++;
     while(IR_SENSOR2_PIN);
     //view(count);
     }
     else if (IR_SENSOR2_PIN) {
     while(!IR_SENSOR1_PIN);
     if(no_count != 0)
-    no_count--;
+      no_count--;
     while(IR_SENSOR1_PIN);
     //view(count);
     }

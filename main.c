@@ -3,20 +3,15 @@
 #include "Delay.h"
 #include "LCD_2_Wire.h"
 #include "Relay.h"
+#include "IR_SENSOR.h"
 
 #define scalar          0.08192
 //#define scalar          0.12412
-#define vref            3.3
 
 void setup(void);
 unsigned int ADC_read(void);
 void lcd_print_i(unsigned char x_pos, unsigned char y_pos, unsigned int value);
 void lcd_print_f(unsigned char x_pos, unsigned char y_pos, unsigned int value);
-
-#define IR_SENSOR1_PIN P13
-#define IR_SENSOR2_PIN P14
-
-//sbit RELAY_PIN = P1^2;
 
 void main(void)
 {
@@ -24,9 +19,7 @@ void main(void)
   unsigned int adc_count = 0;
   unsigned int set_value = 3100;
   unsigned int no_count = 0000;
-  InitIRSensor1();
-  InitIRSensor2();
-  InitRelay();
+  Sensor_Init();
   setup();
 
   while(1)
@@ -40,30 +33,27 @@ void main(void)
       Set_Relay(1);
     if (temp < set_value)
       Reset_Relay(1);
-    Timer0_Delay1ms(6);
 
     if (Sensor_Read_1()) {
       while(!Sensor_Read_2());
       if(no_count != 99)
         no_count++;
       while(Sensor_Read_2());
-    //view(count);
     }
     else if (Sensor_Read_2()) {
       while(!Sensor_Read_1);
       if(no_count != 0)
         no_count--;
       while(Sensor_Read_1);
-    //view(count);
     }
 
     lcd_print_i(12, 0, no_count);
+
     if(no_count >= 1)
       Set_Relay(1);
-    //RELAY_PIN = 0; // Switch relay on
     else if(no_count == 0)
-    //RELAY_PIN = 1; // Switch relay off
-    Reset_Relay(1);
+      Reset_Relay(1);
+
     Timer0_Delay1ms(1);
   }
 }

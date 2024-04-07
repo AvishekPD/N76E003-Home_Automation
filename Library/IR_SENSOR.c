@@ -1,3 +1,5 @@
+#include "Common.h"
+#include "N76E003.h"
 #include "IR_SENSOR.h"
 
 void Sensor_Init(void)

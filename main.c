@@ -6,7 +6,7 @@
 #include "IR_SENSOR.h"
 
 #define scalar          0.08192
-//#define scalar          0.12412
+// #define scalar          0.12412
 
 void setup(void);
 unsigned int ADC_read(void);
@@ -19,6 +19,7 @@ void main(void)
   unsigned int adc_count = 0;
   unsigned int set_value = 3100;
   unsigned int no_count = 0000;
+
   Sensor_Init();
   setup();
 

@@ -18,23 +18,11 @@ void lcd_print_f(unsigned char x_pos, unsigned char y_pos, unsigned int value);
 
 //sbit RELAY_PIN = P1^2;
 
-void InitIRSensor1(void) {
-    P13_Input_Mode;  // Set IR sensor 1 pin as input
-}
-
-void InitIRSensor2(void) {
-    P14_Input_Mode; // Set IR sensor 2 pin as input
-}
-
-void InitRelay(void) {
-    Set_Relay(1);
-    }
-
 void main(void)
 {
   unsigned int temp = 0;
   unsigned int adc_count = 0;
-  unsigned int set_value = 2400;
+  unsigned int set_value = 3100;
   unsigned int no_count = 0000;
   InitIRSensor1();
   InitIRSensor2();
@@ -54,27 +42,28 @@ void main(void)
       Reset_Relay(1);
     Timer0_Delay1ms(6);
 
-    if (IR_SENSOR1_PIN) {
-    while(!IR_SENSOR2_PIN);
-    if(no_count != 99)
-      no_count++;
-    while(IR_SENSOR2_PIN);
+    if (Sensor_Read_1()) {
+      while(!Sensor_Read_2());
+      if(no_count != 99)
+        no_count++;
+      while(Sensor_Read_2());
     //view(count);
     }
-    else if (IR_SENSOR2_PIN) {
-    while(!IR_SENSOR1_PIN);
-    if(no_count != 0)
-      no_count--;
-    while(IR_SENSOR1_PIN);
+    else if (Sensor_Read_2()) {
+      while(!Sensor_Read_1);
+      if(no_count != 0)
+        no_count--;
+      while(Sensor_Read_1);
     //view(count);
     }
+
     lcd_print_i(12, 0, no_count);
-    if(no_count == 1)
-    Reset_Relay(1);
+    if(no_count >= 1)
+      Set_Relay(1);
     //RELAY_PIN = 0; // Switch relay on
     else if(no_count == 0)
     //RELAY_PIN = 1; // Switch relay off
-    Set_Relay(1);
+    Reset_Relay(1);
     Timer0_Delay1ms(1);
   }
 }

@@ -416,6 +416,11 @@
               <FileType>1</FileType>
               <FilePath>.\Library\Relay.c</FilePath>
             </File>
+            <File>
+              <FileName>IR_SENSOR.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Library\IR_SENSOR.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

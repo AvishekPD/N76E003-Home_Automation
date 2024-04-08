@@ -6,8 +6,9 @@
 #include "IR_SENSOR.h"
 
 #define scalar          0.08192
-// #define scalar          0.12412
-
+sbit IR = P1^4;
+sbit RELAY_PIN = P1^1;
+	
 void setup(void);
 unsigned int ADC_read(void);
 void lcd_print_i(unsigned char x_pos, unsigned char y_pos, unsigned int value);
@@ -17,59 +18,36 @@ void main(void)
 {
   unsigned int temp = 0;
   unsigned int adc_count = 0;
-  unsigned int set_value = 3100;
-  unsigned int no_count = 0000;
-
-  Sensor_Init();
+  unsigned int set_temp = 2300;
   setup();
-
   while(1)
   {
     adc_count = ADC_read();
     temp = ((unsigned int)(((float)adc_count) / scalar));
-    //temp = ((unsigned int)(((float)adc_count)*(vref*100.0))/4096);
-    //lcd_print_i(12, 0, adc_count);
+    lcd_print_i(12, 0, adc_count);
     lcd_print_f(11, 1, temp);
-    if (temp > set_value)
-      Set_Relay(1);
-    if (temp < set_value)
-      Reset_Relay(1);
-
-    if (Sensor_Read_1()) {
-      while(!Sensor_Read_2());
-      if(no_count != 99)
-        no_count++;
-      while(Sensor_Read_2());
-    }
-    else if (Sensor_Read_2()) {
-      while(!Sensor_Read_1);
-      if(no_count != 0)
-        no_count--;
-      while(Sensor_Read_1);
-    }
-
-    lcd_print_i(12, 0, no_count);
-
-    if(no_count >= 1)
-      Set_Relay(1);
-    else if(no_count == 0)
-      Reset_Relay(1);
-
-    Timer0_Delay1ms(1);
-  }
+    Timer0_Delay1ms(60);
+		
+		if (IR == 1){
+			RELAY_PIN = 0;
+		}else {
+			RELAY_PIN = 1;
+		}
+	}
 }
-
 
 void setup(void)
 {
-
   LCD_init();
   LCD_clear_home();
   LCD_goto(0, 0);
-  LCD_putstr("No. Count:");
+  LCD_putstr("ADC Count:");
   LCD_goto(0, 1);
   LCD_putstr("Tmp/deg C:");
-  Enable_ADC_AIN1;
+  Enable_ADC_AIN0;
+	RELAY_PIN = 1;
+	P11_PushPull_Mode;
+	P01_Input_Mode;
 }
 
 unsigned int ADC_read(void)
